@@ -1,0 +1,9 @@
+pages\AddTariffPlanPage.class
+pages\BasePage.class
+utils\Logs.class
+pages\HomePage.class
+utils\ScenarioContext.class
+pages\AddCustomerPage.class
+utils\TestDataGenerator.class
+utils\ConfigReader.class
+utils\DriverManager.class

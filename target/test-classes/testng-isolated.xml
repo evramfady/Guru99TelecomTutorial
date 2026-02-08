@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="NBE Telecom Isolated Tests Suite" parallel="classes" thread-count="2" verbose="1">
+
+    <parameter name="browser" value="chrome"/>
+
+    <!-- Test Case 1: Add Customer -->
+    <test name="TC1 - Add Customer" preserve-order="true">
+        <groups>
+            <run>
+                <include name="customerCreation"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.AddCustomerTest">
+                <methods>
+                    <include name="testAddCustomer"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <!-- Test Case 2: Add Tariff Plan -->
+    <test name="TC2 - Add Tariff Plan to Customer" preserve-order="true">
+        <classes>
+            <class name="tests.AddTariffPlanTest"/>
+        </classes>
+    </test>
+    
+</suite>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="NBE Telecom Automation Suite" parallel="false" verbose="1">
+    
+    <parameter name="browser" value="chrome"/>
+    
+    <!-- End-to-End Test Suite -->
+    <test name="End-to-End Test" preserve-order="true">
+        <classes>
+            <class name="tests.EndToEndTest"/>
+        </classes>
+    </test>
+    
+</suite>

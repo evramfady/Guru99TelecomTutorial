@@ -1,0 +1,4 @@
+tests\AddCustomerTest.class
+tests\AddTariffPlanTest.class
+tests\EndToEndTest.class
+tests\BaseTest.class
