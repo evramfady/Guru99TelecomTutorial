@@ -62,9 +62,21 @@ echo ========================================
 echo Test Execution Completed!
 echo ========================================
 echo.
+echo Generating Allure Report...
+call mvn allure:report
+echo.
 echo Reports location:
-echo - target\surefire-reports\index.html
-echo - target\surefire-reports\emailable-report.html
+echo - target\allure-report\index.html (Allure Report)
+echo - target\surefire-reports\index.html (Surefire Report)
+echo - target\surefire-reports\emailable-report.html (Emailable Report)
+echo.
+echo Opening Allure Report in browser...
+timeout /t 2
+if exist "target\allure-report\index.html" (
+    start "" "target\allure-report\index.html"
+) else (
+    echo Warning: Allure report not found at target\allure-report\index.html
+)
 echo.
 pause
 goto menu

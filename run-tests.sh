@@ -59,9 +59,34 @@ show_report() {
     echo "Test Execution Completed!"
     echo "========================================"
     echo ""
+    echo "Generating Allure Report..."
+    mvn allure:report
+    echo ""
     echo "Reports location:"
-    echo "- target/surefire-reports/index.html"
-    echo "- target/surefire-reports/emailable-report.html"
+    echo "- target/allure-report/index.html (Allure Report)"
+    echo "- target/surefire-reports/index.html (Surefire Report)"
+    echo "- target/surefire-reports/emailable-report.html (Emailable Report)"
+    echo ""
+    echo "Opening Allure Report in browser..."
+    sleep 2
+
+    # Determine OS and open report accordingly
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux
+        if command -v xdg-open &> /dev/null; then
+            xdg-open "target/allure-report/index.html" &
+        fi
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        open "target/allure-report/index.html" &
+    elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+        # Windows (Git Bash, Cygwin)
+        start "" "target/allure-report/index.html"
+    fi
+
+    if [ ! -f "target/allure-report/index.html" ]; then
+        echo "Warning: Allure report not found at target/allure-report/index.html"
+    fi
     echo ""
     read -p "Press Enter to continue..."
 }
