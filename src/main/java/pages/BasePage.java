@@ -1,9 +1,8 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import io.qameta.allure.Allure;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -11,7 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.ConfigReader;
 import utils.Logs;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
@@ -22,6 +24,7 @@ public class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected static int ExplicitWaitTime;
+    private static final String SCREENSHOTS_PATH = "test-outputs/Screenshots/";
 
     static {
         ExplicitWaitTime = ConfigReader.getExplicitWait();
@@ -107,5 +110,21 @@ public class BasePage {
             return false;
         }
         return true;
+    }
+
+    public static void takeScreenShot(WebDriver driver, String screenshotName) {
+        try {
+            // Capture screenshot using TakesScreenshot
+            File screenshotSrc = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+            // Save screenshot to a file if needed
+            File screenshotFile = new File(SCREENSHOTS_PATH + screenshotName + "-" + getTimeStamp() + ".png");
+            FileUtils.copyFile(screenshotSrc, screenshotFile);
+
+            // Attach the screenshot to Allure
+            Allure.addAttachment(screenshotName, Files.newInputStream(Path.of(screenshotFile.getPath())));
+        } catch (Exception e) {
+            Logs.error(e.getMessage());
+        }
     }
 }
